@@ -3,7 +3,11 @@ package com.Hellen.MyProject;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 
+import com.Hellen.MyProject.Auth.AuthService;
+import com.Hellen.MyProject.Auth.AuthServlet;
+import com.Hellen.MyProject.Users.UserDAO;
 import com.Hellen.MyProject.Users.UserServlet;
+import com.Hellen.MyProject.Users.*;
 
 public class MyApplication {
 
@@ -16,11 +20,16 @@ public class MyApplication {
 		webServer.setPort(5000);
 		webServer.getConnector();
 		
-		UserServlet userServlet = new UserServlet();
+		UserDAO userDAO = new UserDAO();
+		AuthService authService = new AuthService(userDAO);
+		UserService userService = new UserService(userDAO);
+	    UserServlet userServlet = new UserServlet(userService);
+	    AuthServlet authServlet = new AuthServlet(authService);
 		
-		final String rootContext = "/ers";
+		final String rootContext = "/myapplication";
 		webServer.addContext(rootContext, docBase);
 		webServer.addServlet(rootContext, "UserServlet", userServlet).addMapping("/users");
+		webServer.addServlet(rootContext, "AuthServlet", authServlet).addMapping("/auth");
 		
 		webServer.start();
 		webServer.getServer().await();

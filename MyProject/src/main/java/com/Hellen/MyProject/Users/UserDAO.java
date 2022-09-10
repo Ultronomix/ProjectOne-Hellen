@@ -13,9 +13,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 import com.Hellen.MyProject.Common.ConnectionFactory;
+import com.Hellen.MyProject.Exceptions.DataSourceException;
+
 
 
 public class UserDAO {
@@ -52,8 +54,9 @@ public class UserDAO {
 		   psmt.setString(2, password);
 		   ResultSet rs = psmt.executeQuery();
 		   return mapResultSet(rs).stream().findFirst();
+		   
 	   } catch (SQLException e) {
-		   throw new RuntimeException(e);
+		   throw new DataSourceException(e);
 	   }
    }
    public String save(User user) {
@@ -74,6 +77,7 @@ public class UserDAO {
 		   ResultSet rs = pstmt.getGeneratedKeys();
 		   rs.next();
 		   user.setUserId(rs.getString("id"));
+		   
 	   }catch (SQLException e) {
 		   log("error", e.getMessage());
 		   
@@ -105,6 +109,7 @@ public class UserDAO {
 		   BufferedWriter logWriter = new BufferedWriter(new FileWriter(logFile));
 		   logWriter.write(String.format("[%s] at %s logged: [%s] %s\n", Thread.currentThread().getName(), LocalDate.now(), level.toUpperCase(), message));
 	       logWriter.flush();
+	       
 	   } catch(IOException e) {
 		   throw new RuntimeException("There was a problem while writing to the log file");
 	   }
