@@ -18,12 +18,12 @@ public class AuthService {
 	
 	public UserResponse authenticate(Credentials credentials) {
 		
-		if(credentials == null || credentials.getUsername().trim().length() < 4 || credentials.getPassword().trim().length() < 6) {
+		if(credentials == null || credentials.getUsername().trim().length() < 2 || credentials.getPassword().trim().length() < 6) {
 			throw new InvalidRequestException("The provided credentials are invalid");
 		}
 		
-		if (credentials.getUsername().length() < 4) {
-			throw new InvalidRequestException("The provided username was not the correct length (must atleast be 4 characters long)");
+		if (credentials.getUsername().length() < 2) {
+			throw new InvalidRequestException("The provided username was not the correct length (must atleast be 2 characters long)");
 		}
 		
 		if (credentials.getPassword().length() < 8) {

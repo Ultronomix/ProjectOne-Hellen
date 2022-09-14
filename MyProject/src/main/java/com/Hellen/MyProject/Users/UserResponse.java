@@ -1,13 +1,25 @@
 package com.Hellen.MyProject.Users;
 
-public class UserResponse {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class UserResponse implements Serializable{
+	
 	private String id;
+	
 	private String givenName;
+	
 	private String surname;
+	
 	private String email;
+	
 	private String username;
+	
 	private String password;
+	
 	private String role;
+	
+	private boolean is_active;
 	
 	public UserResponse(User subject) {
 		this.setId(subject.getUserId());
@@ -15,6 +27,7 @@ public class UserResponse {
 		this.setSurname(subject.getSurname());
 		this.setEmail(subject.getEmail());
 		this.setUsername(subject.getUsername());
+		this.setIs_active(subject.getIsActive());
 		this.setPassword(subject.getPassword());
 		this.setRole(subject.getRole().getRole());
 	}
@@ -74,6 +87,29 @@ public class UserResponse {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	public boolean getIs_active() {
+		return is_active;
+	}
+	public void setIs_active(boolean is_active) {
+		this.is_active = is_active;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, username,email,givenName, surname, is_active, role);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) return true;
+		if(obj == null || getClass() != obj.getClass()) return false;
+		UserResponse userResponse = (UserResponse) obj;
+		return Objects.equals(id, userResponse.id) && Objects.equals(username, userResponse.username)
+				&& Objects.equals(surname, userResponse.surname) && Objects.equals(is_active, userResponse.is_active)
+	            && Objects.equals(email, userResponse.email) && Objects.equals(givenName, userResponse.givenName)
+	            && Objects.equals(role, userResponse.role);           
+	
+	}
 	
 	@Override
 	public String toString() {
@@ -83,6 +119,7 @@ public class UserResponse {
 	    ", surname='" + surname + '\'' +
 	    ", email='" + email + '\'' +
 	    ", username='" + username + '\'' +
+	    ", is_active='" + is_active + '\'' +
 	    ", password='" + password + '\'' +
 	    ", role='" + role + '\'' +
 	    '}';

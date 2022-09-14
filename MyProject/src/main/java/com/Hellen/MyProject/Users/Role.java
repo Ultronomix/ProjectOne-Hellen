@@ -7,7 +7,12 @@ public class Role {
     private String id;
     private String role;
     
-    public Role(String id, String role) {
+    
+    public Role() {
+		super();
+	}
+
+	public Role(String id, String role) {
 	  this.id = id;
 	  this.role = role;
     }
