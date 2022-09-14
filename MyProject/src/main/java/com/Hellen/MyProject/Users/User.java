@@ -10,7 +10,7 @@ public class User {
 	private String password;
 	private String givenName;
 	private String surname;
-	private String isActive;
+	private boolean isActive;
 	private Role role;
 	
 	public String getUserId() {
@@ -61,12 +61,12 @@ public class User {
 		this.surname = surname;
 	}
 	
-	public String getIsActive() {
+	public boolean getIsActive() {
 		return isActive;
 	}
 	
-	public void setIsActive(String isActive) {
-		this.isActive = isActive;
+	public void setIs_active(boolean is_active) {
+		this.isActive = is_active;
 	}
 	
 	public Role getRole() {
