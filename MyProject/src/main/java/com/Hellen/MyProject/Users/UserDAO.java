@@ -22,7 +22,7 @@ import com.Hellen.MyProject.Exceptions.DataSourceException;
 
 public class UserDAO {
 	
-    private String baseSelect = "select au.user_id, au.username, au.email, au._password,ur.role, " +
+    private String baseSelect = "select au.user_id, au.username, au.email, au._password,ur.role, au.role_id, " +
                                 "au.given_name, au.surname, " +
     	                        "au.is_active, ur.role " +
     	                        "from ers_users au " +
