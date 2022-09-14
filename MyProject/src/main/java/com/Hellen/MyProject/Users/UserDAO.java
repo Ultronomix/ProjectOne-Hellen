@@ -22,7 +22,7 @@ import com.Hellen.MyProject.Exceptions.DataSourceException;
 
 public class UserDAO {
 	
-    private String baseSelect = "select au.user_id, au.username, au.email, au._password,ur.role, " +
+    private String baseSelect = "select au.user_id, au.username, au.email, au._password,ur.role, au.role_id, " +
                                 "au.given_name, au.surname, " +
     	                        "au.is_active, ur.role " +
     	                        "from ers_users au " +
@@ -147,8 +147,8 @@ public class UserDAO {
 	  
  
    public String save(User user) {
-	   String sql = "insert into ers_users(user_id, username, email, password, given_name, surname,is_active, role, role_id) " +
-                    "values (?, ?, ?, ?, ?, '')";
+	   String sql = "insert into ers_users(user_id, username, email, password, given_name, surname, is_active, role, role_id) " +
+                    "values (?, ?, ?, ?, ?, ?, ? )";
 	   
 	   try (Connection conn = ConnectionFactory.getInstance().getConnection()){
 		   
@@ -166,7 +166,7 @@ public class UserDAO {
 		   System.out.println("is_active: " + user.getIsActive());
 		   pstmt.setBoolean(6, user.getIsActive());
 		   System.out.println("role: " + user.getRole());
-		   pstmt.setString(7, user.getRole().getId());
+		   pstmt.setString(7, user.getRoleId());
 		   
 		   pstmt.executeUpdate();
 		   
@@ -178,17 +178,7 @@ public class UserDAO {
 	   }
 	   
 		   
-		   //ResultSet rs = pstmt.getGeneratedKeys();
-		   //rs.next();
-		   //user.setUserId(rs.getString("id"));
-		   
-	   //}catch (SQLException e) {
-		   //log("error", e.getMessage());
-		   
-	   //}
-	  // log("info", "Successfully persisted new user with id: " + user.getUserId());
-	   //return user.getUserId();
-  // }
+		  
    
    private List<User> mapResultSet(ResultSet rs) throws SQLException {
 	   List<User> users = new ArrayList();
@@ -207,7 +197,7 @@ public class UserDAO {
 		   userRole.setId(rs.getString("role_id"));
 		   userRole.setId(rs.getString("role"));
 		   
-		   user.setRole(userRole);
+		   user.setRole(rs.getString("role"));
 		   users.add(user);
 	   }
 	   return users;

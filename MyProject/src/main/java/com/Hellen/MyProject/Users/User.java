@@ -11,7 +11,8 @@ public class User {
 	private String givenName;
 	private String surname;
 	private boolean isActive;
-	private Role role;
+	private String role;
+	private String roleId;
 	
 	public String getUserId() {
 		return userId;
@@ -69,11 +70,11 @@ public class User {
 		this.isActive = is_active;
 	}
 	
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 	
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 	
@@ -82,12 +83,12 @@ public class User {
 		if(this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 		User user = (User) o;
-		return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(givenName, user.givenName) && Objects.equals(surname, user.surname) && Objects.equals(isActive, user.isActive) && Objects.equals(role, user.role);
+		return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(givenName, user.givenName) && Objects.equals(surname, user.surname) && Objects.equals(isActive, user.isActive) && Objects.equals(role, user.role) && Objects.equals(roleId, user.roleId);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(userId, username, email, password,givenName, surname, isActive, role);
+		return Objects.hash(userId, username, email, password,givenName, surname, isActive, role, roleId);
 	}
 	
 	@Override
@@ -102,6 +103,14 @@ public class User {
 	           ", isActive='" + isActive + '\'' +
 	           ", role='" + role + '\'' +
 	           '}';
+	}
+
+	public String getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
 }
 

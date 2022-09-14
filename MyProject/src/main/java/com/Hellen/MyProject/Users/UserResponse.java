@@ -29,7 +29,7 @@ public class UserResponse implements Serializable{
 		this.setUsername(subject.getUsername());
 		this.setIs_active(subject.getIsActive());
 		this.setPassword(subject.getPassword());
-		this.setRole(subject.getRole().getRole());
+		this.setRole(subject.getRole());
 	}
 
 	public String getId() {
