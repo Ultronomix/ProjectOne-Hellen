@@ -3,7 +3,10 @@ package com.Hellen.MyProject.Reimbursements;
 import java.util.ArrayList;
 import java.util.List;
 import com.Hellen.MyProject.Exceptions.InvalidRequestException;
+import com.Hellen.MyProject.Exceptions.ResourceCreationResponse;
 import com.Hellen.MyProject.Exceptions.ResourceNotFoundException;
+import com.Hellen.MyProject.Users.UpdateUserRequest;
+import com.Hellen.MyProject.Users.UserDAO;
 
 public class ReimbService {
 	
@@ -86,6 +89,11 @@ public class ReimbService {
         return result;
         // TODO add log
     }
+
+	public ResourceCreationResponse updateUser(UpdateReimbRequest readValue, String idToSearchFor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }

@@ -16,7 +16,7 @@ public class ReimbDAO {
 	
 	private final String select = "SELECT er.reimb_id, er.amount, er.submitted, er.resolved, " +
                                   "er.description, er.payment_id, er.author_id, er.resolver_id, " +
-                                  "ers.status, ert.type " +
+                                  "ers.status, ert._type " +
                                   "FROM ers_reimbursements er " +
                                   "JOIN ers_reimbursement_statuses ers ON er.status_id = ers.status_id " +
                                   "JOIN ers_reimbursement_types ert ON er.type_id = ert.type_id ";
@@ -120,7 +120,7 @@ public class ReimbDAO {
      reimb.setAuthor_id(rs.getString("author_id"));
      reimb.setResolver_id(rs.getString("resolver_id"));
      reimb.setStatus(rs.getString("status"));
-     reimb.setType(rs.getString("type"));
+     reimb.setType(rs.getString("_type"));
      reimbs.add(reimb);
     }
 

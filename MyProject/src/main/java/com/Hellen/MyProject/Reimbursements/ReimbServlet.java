@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.Hellen.MyProject.Common.ErrorResponse;
+import com.Hellen.MyProject.Exceptions.AuthenticationException;
 import com.Hellen.MyProject.Exceptions.DataSourceException;
 import com.Hellen.MyProject.Exceptions.InvalidRequestException;
+import com.Hellen.MyProject.Exceptions.ResourceCreationResponse;
 import com.Hellen.MyProject.Exceptions.ResourceNotFoundException;
+import com.Hellen.MyProject.Users.UpdateUserRequest;
 import com.Hellen.MyProject.Users.UserResponse;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -139,7 +142,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	            resp.getWriter().write("test put constraint");
 	          }
 
-
+	        try {
+				ResourceCreationResponse responseBody = reimbService
+						.updateUser(jsonMapper.readValue(req.getInputStream(), UpdateReimbRequest.class), idToSearchFor);
+				resp.getWriter().write(jsonMapper.writeValueAsString(responseBody));
+			} catch(InvalidRequestException |  JsonMappingException e) {
+				resp.setStatus(400);
+				resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(400, e.getMessage())));
+				
+			} catch (AuthenticationException e) {
+				resp.setStatus(409);
+				resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(409, e.getMessage())));
+				
+			} catch (DataSourceException e) {
+				resp.setStatus(500);
+				resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
+			}
 
 	        resp.getWriter().write("Put to /reimb work");
 	    }
