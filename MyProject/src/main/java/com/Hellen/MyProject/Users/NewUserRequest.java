@@ -54,6 +54,12 @@ public class NewUserRequest implements Request<User> {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id =id;
+	}
 	
 	@Override
 	public String toString() {
@@ -64,12 +70,14 @@ public class NewUserRequest implements Request<User> {
 	           ",username='" + username + '\'' +
 	           ",is_active='" + is_active + '\'' +
 	           ",password='" + password + '\'' +
+	           ",id='" + id + '\'' +
 	           '}';
 	}
 	
 	@Override
 	public User extractEntity() {
 		User extractedEntity = new User();
+		extractedEntity.setUsername(this.username);
 		extractedEntity.setUserId(this.id);
 		extractedEntity.setGivenName(this.givenName);
 		extractedEntity.setSurname(this.surname);

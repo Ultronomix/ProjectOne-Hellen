@@ -71,7 +71,7 @@ public class UserDAO {
 	  
 	  public Optional<User> findUserbyId(String id) {
 		  
-		   String sql = baseSelect + "au.userId = ?";
+		   String sql = baseSelect + "where au.userId = ?";
 		                
 				   
 		  try (Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -81,13 +81,14 @@ public class UserDAO {
 			   return mapResultSet(rs).stream().findFirst();
 			   
 		   } catch (SQLException e) {
+			   e.printStackTrace();
 			   throw new DataSourceException(e);
 		   }
 		  
    }
 	  public Optional<User> findUserbyUsername(String username) {
 		  
-		   String sql = baseSelect + "au.username = ?";
+		   String sql = baseSelect + " where au.username = ?";
 		                
 				   
 		  try (Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -97,6 +98,7 @@ public class UserDAO {
 			   return mapResultSet(rs).stream().findFirst();
 			   
 		   } catch (SQLException e) {
+			   e.printStackTrace();
 			   throw new DataSourceException(e);
 		   }
 		  
@@ -104,7 +106,7 @@ public class UserDAO {
 	  
 	  public Optional<User> findUserByRole(String role) {
 		  
-		   String sql = baseSelect + "au.User_role = ?";
+		   String sql = baseSelect + "where au.User_role = ?";
 		                
 				   
 		  try (Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -114,6 +116,7 @@ public class UserDAO {
 			   return mapResultSet(rs).stream().findFirst();
 			   
 		   } catch (SQLException e) {
+			   e.printStackTrace();
 			   throw new DataSourceException(e);
 		   }
 		  
@@ -121,7 +124,7 @@ public class UserDAO {
 	  
 	  public Optional<User> findUserByEmail(String email) {
 		  
-		   String sql = baseSelect + "au.email = ?";
+		   String sql = baseSelect + "where au.email = ?";
 		                
 				   
 		  try (Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -131,6 +134,7 @@ public class UserDAO {
 			   return mapResultSet(rs).stream().findFirst();
 			   
 		   } catch (SQLException e) {
+			   e.printStackTrace();
 			   throw new DataSourceException(e);
 		   }
 		  
@@ -147,30 +151,32 @@ public class UserDAO {
 	  
  
    public String save(User user) {
-	   String sql = "insert into ers_users(user_id, username, email, password, given_name, surname, is_active, role, role_id) " +
-                    "values (?, ?, ?, ?, ?, ?, ? )";
+	   
+	   String sql = "insert into ers_users(user_id, username, email, _password, given_name, surname, is_active, role_id) " +
+                    "values ('11',?, ?, ?, ?, ?, ?, ? )";
 	   
 	   try (Connection conn = ConnectionFactory.getInstance().getConnection()){
 		   
-		   PreparedStatement pstmt = conn.prepareStatement(sql, new String[] {"id"});
-		   System.out.println("username: " + user.getUsername());
+		   PreparedStatement pstmt = conn.prepareStatement(sql);
+		  
 		   pstmt.setString(1, user.getUsername());
-		   System.out.println("email: " + user.getEmail());
-		   pstmt.setString(2, user.getEmail());
-		   System.out.println("password: " + user.getPassword());
-		   pstmt.setString(3, user.getPassword());
-		   System.out.println("givenName: " + user.getGivenName());
-		   pstmt.setString(4, user.getGivenName());
-		   System.out.println("surname: " + user.getSurname());
-		   pstmt.setString(5, user.getSurname());
-		   System.out.println("is_active: " + user.getIsActive());
-		   pstmt.setBoolean(6, user.getIsActive());
-		   System.out.println("role: " + user.getRole());
-		   pstmt.setString(7, user.getRoleId());
 		   
+		   pstmt.setString(2, user.getEmail());
+		  
+		   pstmt.setString(3, user.getPassword());
+		  
+		   pstmt.setString(4, user.getGivenName());
+		  
+		   pstmt.setString(5, user.getSurname());
+		   
+		   pstmt.setBoolean(6, user.getIsActive());
+		   
+		   pstmt.setString(7, user.getRoleId());
+		  
 		   pstmt.executeUpdate();
 		   
-	   } catch(Exception e) {
+		   
+	   } catch(SQLException e) {
 		  System.err.println("Something went wrong when connecting to the database");
 		  e.printStackTrace();
 	   }
@@ -195,7 +201,7 @@ public class UserDAO {
 		   user.setIs_active(rs.getBoolean("is_active"));
 		   
 		   userRole.setId(rs.getString("role_id"));
-		   userRole.setId(rs.getString("role"));
+		   userRole.setRole(rs.getString("role"));
 		   
 		   user.setRole(rs.getString("role"));
 		   users.add(user);
