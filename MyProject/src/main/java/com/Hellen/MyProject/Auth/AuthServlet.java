@@ -65,7 +65,7 @@ import com.Hellen.MyProject.Exceptions.*;
 	    }
 	    @Override
 	    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	    	req.getSession().invalidate();
+	    	req.getSession().invalidate();// this effectively "logs out" the requester by invalidating the session within the server.
 	    }
 	}
 

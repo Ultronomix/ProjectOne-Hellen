@@ -11,7 +11,7 @@ public class NewUserRequest implements Request<User> {
 	private String password;
 	private boolean is_active;
 	private String id;
-	
+	private String role_id;
 	
 	public boolean isIs_active() {
 		return is_active;
@@ -61,6 +61,13 @@ public class NewUserRequest implements Request<User> {
 		this.id =id;
 	}
 	
+	public String getRole_Id() {
+		return role_id;
+	}
+	public void setRole_id(String role_id) {
+		this.role_id = role_id;
+	}
+	
 	@Override
 	public String toString() {
 		return "NewUserRequest{" +
@@ -70,6 +77,7 @@ public class NewUserRequest implements Request<User> {
 	           ",username='" + username + '\'' +
 	           ",is_active='" + is_active + '\'' +
 	           ",password='" + password + '\'' +
+	           ",role_id='" + role_id + '\'' +
 	           ",id='" + id + '\'' +
 	           '}';
 	}
@@ -84,7 +92,8 @@ public class NewUserRequest implements Request<User> {
 		extractedEntity.setEmail(this.email);
 		extractedEntity.setIs_active(this.is_active);
 		extractedEntity.setPassword(this.password);
-		//extractedEntity.setRole(this.role);
+		extractedEntity.setRole_id(this.role_id);
 		return extractedEntity;
 	}
+	
 }

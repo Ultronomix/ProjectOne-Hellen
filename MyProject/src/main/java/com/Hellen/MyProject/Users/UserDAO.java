@@ -171,7 +171,7 @@ public class UserDAO {
 		   
 		   pstmt.setBoolean(6, user.getIsActive());
 		   
-		   pstmt.setString(7, user.getRoleId());
+		   pstmt.setString(7, user.getRole_id());
 		  
 		   pstmt.executeUpdate();
 		   
