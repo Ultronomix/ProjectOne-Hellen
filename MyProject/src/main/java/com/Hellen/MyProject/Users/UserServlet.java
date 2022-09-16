@@ -160,6 +160,11 @@ public class UserServlet extends HttpServlet {
 		resp.getWriter().write("\nEmail is: "+ requester.getEmail());
 		
 	 }
+	@Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().invalidate();
+
 	}
+}
 
 
