@@ -53,6 +53,7 @@ public class UserService {
 	}
 	public ResourceCreationResponse register (NewUserRequest newUser) {
 		
+		
 		if(newUser == null) {
 			throw new InvalidRequestException("Provided request payload was null");
 		}
@@ -69,15 +70,24 @@ public class UserService {
 		if(newUser.getPassword() == null || newUser.getPassword().trim().length() < 6){
 			throw new InvalidRequestException("Password must atleast be 6 characters");
 		}
+		
+		
+		
 		if(userDAO.isEmailTaken(newUser.getEmail())) {
 			throw new ResourcePersistenceException("Resource not persisted. The email is taken");
+			
 		}
+		
+		
 		if(userDAO.isUsernameTaken(newUser.getUsername())) {
 			throw new ResourcePersistenceException("Resource not persisted. The username is taken");
 		}
 		
+		
 		User userToPersist = newUser.extractEntity();
+		
 		String newUserId = userDAO.save(userToPersist);
+		
 		return new ResourceCreationResponse(newUserId);
 		
 	}

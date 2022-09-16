@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
  public class ReimbServlet extends HttpServlet {
+	 
 	 private final ReimbService reimbService;
 
 	    public ReimbServlet(ReimbService reimbService) {
@@ -57,7 +58,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	        
 	        try {
 	            if (idToSearchFor == null && statusToSearchFor == null && typeToSearchFor == null) {
-	                // TODO add log
+	              
 	                List<ReimbResponse> allReimb = reimbService.getAllReimb();
 	                resp.getWriter().write(jsonMapper.writeValueAsString(allReimb));
 	                //! resp.getWriter().write("\nGet all reimburse request");
@@ -78,7 +79,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	                // TODO add log
 	                List<ReimbResponse> foundType = reimbService.getReimbByType(typeToSearchFor);
 	                resp.getWriter().write(jsonMapper.writeValueAsString(foundType));
-	                //! resp.getWriter().write("\nGet reimburse by type");
+	               
 	            }
 	        } catch (InvalidRequestException | JsonMappingException e) {
 	            // TODO add log
@@ -138,15 +139,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 	        if ((!requester.getRole().equals("admin") && !requester.getRole().equals("finance manager")) 
 	          && !requester.getId().equals(idToSearchFor)) {
-	            // TODO log
-	            resp.getWriter().write("test put constraint");
-	          }
+	            resp.setStatus(403);
+	            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(403, "Requester not permitted to communicate with this endpoint")));
+	            return;
+	        }
 
 	        try {
+	        	if(requester.getId().equals(idToSearchFor)) {
+	        	
 				ResourceCreationResponse responseBody = reimbService
-						.updateUser(jsonMapper.readValue(req.getInputStream(), UpdateReimbRequest.class), idToSearchFor);
+						.updateUserReimb(jsonMapper.readValue(req.getInputStream(), UpdateReimbRequest.class), idToSearchFor);
 				resp.getWriter().write(jsonMapper.writeValueAsString(responseBody));
-			} catch(InvalidRequestException |  JsonMappingException e) {
+				
+			} 
+	        		
+	        }catch(InvalidRequestException |  JsonMappingException e) {
 				resp.setStatus(400);
 				resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(400, e.getMessage())));
 				
@@ -160,6 +167,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 			}
 
 	        resp.getWriter().write("Put to /reimb work");
-	    }
+	    
 	
 }
+ }

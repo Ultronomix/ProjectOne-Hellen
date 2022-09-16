@@ -3,11 +3,12 @@ package com.Hellen.MyProject.Reimbursements;
 import java.util.Objects;
 
 public class Reimb {
+	
 	private String reimb_id;
 	private String resolved;
 	private String payment_id;
 	private String submitted;
-	private int amount;
+	private double amount;
 	private String resolver_id;
 	private String status;
 	private String author_id;
@@ -39,10 +40,10 @@ public class Reimb {
 	public void setResolved(String resolved) {
 		this.resolved = resolved;
 	}
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	public String getResolver_id() {

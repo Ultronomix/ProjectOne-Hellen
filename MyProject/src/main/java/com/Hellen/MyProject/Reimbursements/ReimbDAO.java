@@ -1,16 +1,26 @@
 package com.Hellen.MyProject.Reimbursements;
 
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.Hellen.MyProject.Common.ConnectionFactory;
 import com.Hellen.MyProject.Exceptions.DataSourceException;
+import com.Hellen.MyProject.Exceptions.ResourceNotFoundException;
+import com.Hellen.MyProject.Users.User;
 
 public class ReimbDAO {
 	
@@ -41,7 +51,7 @@ public class ReimbDAO {
 
 }
 
-     public Optional<Reimb> getReimbById (String id) {
+     public Optional<Reimb> getReimbByReimbId (String reimb_id) {
 
      // TODO add log
     String sqlId = select + "WHERE er.author_id = ?";
@@ -49,7 +59,7 @@ public class ReimbDAO {
     try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
         PreparedStatement pstmt = conn.prepareStatement(sqlId);
-        pstmt.setString(1, id);
+        pstmt.setString(1, reimb_id);
         ResultSet rs = pstmt.executeQuery();
 
    return mapResultSet(rs).stream().findFirst();
@@ -104,15 +114,97 @@ public class ReimbDAO {
         throw new DataSourceException(e);
        }
       }
+      
+      public String updateRequestStatus (String status, String reimb_id, String resolver_id) {
+    	  String updateSql = "update ers_reimbursements set status_id = ?, resolved = ?, resolver_id = ?, where remb_id = ?";
+    	  try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+    		  
+    		  PreparedStatement pstmt = conn.prepareStatement(updateSql);
+    		  pstmt.setString(1, status);
+    		  pstmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+    		  pstmt.setString(3,resolver_id);
+    		  pstmt.setString(4, reimb_id);
+    		  pstmt.executeUpdate();
+    		  return "Updated status";
+    		  
+    	  } catch (SQLException e) {
+    		  throw new DataSourceException(e);
+    	  }
+      }
+      public String updateUserAmount (String reimbId,double newAmount) {
+    	  String updateAmountSql = "update ers_reimbursements set amount = ? where reimb_id = ?";
+    	  
+    	  try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+    		  
+    		  PreparedStatement pstmt = conn.prepareStatement(updateAmountSql);
+    		  pstmt.setDouble(1, newAmount);
+    		  pstmt.setString(2, reimbId);
+    		  pstmt.executeUpdate();
+    		  return "Amount";
+    	  } catch(SQLException e) {
+    		  throw new DataSourceException(e);
+    	  }
+      }
+      
+      public String updateUserDescription (String reimbId, String description) {
+    	  
+         String updateAmountSql = "update ers_reimbursements set description = ? where reimb_id = ?";
+    	  
+    	  try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+    		  
+    		  PreparedStatement pstmt = conn.prepareStatement(updateAmountSql);
+    		  pstmt.setString(1, description);
+    		  pstmt.setString(2, reimbId);
+    		  System.out.println(pstmt);
+    		  pstmt.executeUpdate();
+    		  
+    		  return "Description";
+    	  } catch(SQLException e) {
+    		  throw new DataSourceException(e);
+    	  }
+      }
+     
+      public String updateUserType (String reimbId, String type_id) {
+    	  
+          String updateAmountSql = "update ers_reimbursements set type_id = ? where reimb_id = ?";
+     	  
+     	  try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+     		  
+     		  PreparedStatement pstmt = conn.prepareStatement(updateAmountSql);
+     		  pstmt.setString(1, type_id);
+     		  pstmt.setString(2, reimbId);
+     		  System.out.println(pstmt);
+     		  pstmt.executeUpdate();
+     		  
+     		  return "Type";
+     	  } catch(SQLException e) {
+     		  throw new DataSourceException(e);
+     	  }
+       }
+      
+      public boolean isPending (String reimbId) {
+    	  
+    	  try {
+    		  Optional<Reimb> reimb = getReimbByReimbId(reimbId);
+    		  if(reimb.get().getStatus().equals("Pending")) {
+    			  return true;
+    		  } else {
+    			  return false;
+    		  }
+    	  } catch (NoSuchElementException e) {
+    		  throw new ResourceNotFoundException();
+    	  }
+      }
+      
 
-      private List<Reimb> mapResultSet(ResultSet rs) throws SQLException {
+	private List<Reimb> mapResultSet(ResultSet rs) throws SQLException {
 
      List<Reimb> reimbs = new ArrayList<>();
 
    while (rs.next()) {
      Reimb reimb = new Reimb();
      reimb.setReimb_id(rs.getString("reimb_id"));
-     reimb.setAmount(rs.getInt("amount"));
+     reimb.setAmount(rs.getDouble("amount"));
      reimb.setSubmitted(rs.getString("submitted"));
      reimb.setResolved(rs.getString("resolved"));
      reimb.setDescription(rs.getString("description"));
@@ -126,5 +218,17 @@ public class ReimbDAO {
 
     return reimbs;
    }
-
+	
+	 public void log(String level, String message) {
+	        try {
+	            File logFile = new File("logs/app.log");
+	            logFile.createNewFile();
+	            BufferedWriter logWriter = new BufferedWriter(new FileWriter(logFile));
+	            logWriter.write(String.format("[%s] at %s logged: [%s] %s\n", Thread.currentThread().getName(), LocalDate.now(), level.toUpperCase(), message));
+	            logWriter.flush();
+	        } catch (IOException e) {
+	            throw new RuntimeException(e);
+	        }
+	    }
+	   
  }

@@ -5,7 +5,7 @@ import com.Hellen.MyProject.Users.Serializable;
 
 public class ReimbResponse implements Serializable{
 	private String reimb_id;
-    private int amount;
+    private double amount;
     private String submitted;
     private String resolved;
     private String description;
@@ -36,11 +36,11 @@ public class ReimbResponse implements Serializable{
         this.reimb_id = reimb_id;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
