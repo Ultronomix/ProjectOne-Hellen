@@ -26,8 +26,8 @@ public class AuthService {
 			throw new InvalidRequestException("The provided username was not the correct length (must atleast be 2 characters long)");
 		}
 		
-		if (credentials.getPassword().length() < 8) {
-			throw new InvalidRequestException("The provided password was not the correct length(must atleast be 8 characters long)");
+		if (credentials.getPassword().length() < 4) {
+			throw new InvalidRequestException("The provided password was not the correct length(must atleast be 4 characters long)");
 		}
 		
 		return userDAO.findUserByUsernameAndPassword(credentials.getUsername(), credentials.getPassword())
