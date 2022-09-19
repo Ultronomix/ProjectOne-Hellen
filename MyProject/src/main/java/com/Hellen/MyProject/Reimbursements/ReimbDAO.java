@@ -79,8 +79,8 @@ public class ReimbDAO {
    public Optional<Reimb> getReimbByStatus (String status) {
 
    // TODO add log
-   String sql = baseSelect + "WHERE ers.status_id = ?";
-   //List<Reimb> reimbsStatus = new  ArrayList<>();
+   String sql = baseSelect + "WHERE ers.status = ?";
+   
 
    try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -88,7 +88,7 @@ public class ReimbDAO {
       pstmt.setString(1, status.toUpperCase());
       ResultSet rs = pstmt.executeQuery();
 
-      //reimbsStatus = mapResultSet(rs);
+     
 
       return mapResultSet(rs).stream().findFirst();
       // TODO add log
@@ -214,18 +214,22 @@ public class ReimbDAO {
       public String save(Reimb newReimb) {
 
           //logger.info("Attempting to persist new reimbursement at {}", LocalDateTime.now());
-          String sql = "INSERT INTO ers_reimbursements (amount, description, author_id, status_id, type_id) " +
-                       "VALUES (?, ?, ?, 'PENDING', ?)";
+          String sql = "INSERT INTO ers_reimbursements (amount, payment_id, reimb_id, submitted, description, author_id, status_id, type_id) " +
+                       "VALUES (?, ?, ?, current_date , ?, ?, 3000, ?)";
 
           try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-             //logger.info("New reimbursement successfully persisted at {}", LocalDateTime.now());
+             
+        	  Timestamp timestamp = new Timestamp(System.currentTimeMillis());
               PreparedStatement pstmt = conn.prepareStatement(sql, new String[] {"reimb_id"});
               pstmt.setDouble(1, newReimb.getAmount());
               pstmt.setString(2, newReimb.getDescription());
               pstmt.setString(3, newReimb.getAuthor_id());
               pstmt.setString(4, newReimb.getType_id());
-
+              pstmt.setString(4, newReimb.getReimb_id());
+              pstmt.setString(5, newReimb.getPayment_id());
+              //pstmt.setString(6, newReimb.getSubmitted());
+              
               pstmt.executeUpdate();
 
               ResultSet rs = pstmt.getGeneratedKeys();
@@ -262,16 +266,6 @@ public class ReimbDAO {
     return reimbs;
    }
 	
-	/* public void log(String level, String message) {
-	        try {
-	            File logFile = new File("logs/app.log");
-	            logFile.createNewFile();
-	            BufferedWriter logWriter = new BufferedWriter(new FileWriter(logFile));
-	            logWriter.write(String.format("[%s] at %s logged: [%s] %s\n", Thread.currentThread().getName(), LocalDate.now(), level.toUpperCase(), message));
-	            logWriter.flush();
-	        } catch (IOException e) {
-	            throw new RuntimeException(e);
-	        }
-	    }*/
+	
 	   
  }

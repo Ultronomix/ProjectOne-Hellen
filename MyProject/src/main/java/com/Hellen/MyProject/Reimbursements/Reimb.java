@@ -89,11 +89,6 @@ public class Reimb {
 		if(o == null || getClass() != o.getClass()) return false;
 		Reimb reimbursement = (Reimb) o;
 		return Double.compare(reimbursement.amount, amount) == 0 && Objects.equals(reimb_id, reimbursement.reimb_id)&& Objects.equals(submitted, reimbursement.submitted) && Objects.equals(resolver_id, reimbursement.resolver_id) && Objects.equals(description, reimbursement.description) && Objects.equals(payment_id, reimbursement.payment_id) && Objects.equals(author_id, reimbursement.author_id) && Objects.equals(resolved, reimbursement.resolved) && Objects.equals(status_id, reimbursement.status_id) && Objects.equals(type_id, reimbursement.type_id);
-		//return Objects.equals(reimb_id, reimbursement.reimb_id) && Objects.equals(amount, reimbursement.amount)
-			//&& Objects.equals(submitted, reimbursement.submitted) && Objects.equals(resolved, reimbursement.resolved)
-			//&& Objects.equals(description, reimbursement.description) && Objects.equals(payment_id, reimbursement.payment_id)
-			//&& Objects.equals(author_id, reimbursement.author_id) && Objects.equals(resolver_id, reimbursement.resolver_id)
-			//&& Objects.equals(status_id, reimbursement.status_id) && Objects.equals(type_id, reimbursement.type_id);
 	}
 	
 	@Override

@@ -51,7 +51,7 @@ import org.apache.logging.log4j.Logger;
 
 	        String reimb_idToSearchFor = req.getParameter("reimb_id");
 	        String status_idToSearchFor = req.getParameter("status_id");
-	        String type_idToSearchFor = req.getParameter("type_id");
+	        //String type_idToSearchFor = req.getParameter("type_id");
 
 	        if ((!requester.getRole().equals("admin") && !requester.getRole().equals("finance manager")) && !requester.getRole().equals("employee")) { // && !requester.getRole().equals(idToSearchFor)) {
 	            
@@ -62,25 +62,16 @@ import org.apache.logging.log4j.Logger;
 	        
 	        try {
 	        	
-	            if (reimb_idToSearchFor != null) {
-	              
-	                ReimbResponse foundRequest = reimbService.getReimbByReimb_id(reimb_idToSearchFor);
-	                resp.getWriter().write(jsonMapper.writeValueAsString(foundRequest));
-	               
-	            }
-	            
-                if (status_idToSearchFor != null) {
-	                
-	                ReimbResponse foundStatus_id = reimbService.getReimbByStatus_id(status_idToSearchFor);
-	                resp.getWriter().write(jsonMapper.writeValueAsString(foundStatus_id));
-	               
-	            }
-	            if (type_idToSearchFor != null) {
-	                
-	                ReimbResponse foundType_id = reimbService.getReimbByType_id(type_idToSearchFor);
-	                resp.getWriter().write(jsonMapper.writeValueAsString(foundType_id));
-	                //! resp.getWriter().write("\nGet reimburse request by id");
-	            }
+	          if(reimb_idToSearchFor != null) {
+	        	  
+	        	  ReimbResponse foundRequest = reimbService.getReimbByReimb_id(reimb_idToSearchFor);
+	        	  resp.getWriter().write(jsonMapper.writeValueAsString(foundRequest));
+	          }
+	          
+	          if(status_idToSearchFor != null) {
+	        	  ReimbResponse foundStatus_id = reimbService.getReimbByStatus_id(status_idToSearchFor);
+	        	  resp.getWriter().write(jsonMapper.writeValueAsString(foundStatus_id));
+	          }
 	            
 	            }catch(InvalidRequestException | JsonMappingException e) {
 	            	
@@ -126,6 +117,7 @@ import org.apache.logging.log4j.Logger;
 	        //logger.info("Attempting to register a new reimbursement at {}", LocalDateTime.now());
 	        
 	        try {
+	        	
 	        	NewReimbRequest requestBody = jsonMapper.readValue(req.getInputStream(), NewReimbRequest.class);
 	        	requestBody.setAuthor_id(requester.getId());
 	        	ResourceCreationResponse responseBody = reimbService.create(requestBody);
@@ -201,7 +193,7 @@ import org.apache.logging.log4j.Logger;
 				resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
 			}
 
-	        //resp.getWriter().write("Put to /reimb work");
+	        resp.getWriter().write("Put to /reimb work");
                }
  
 	
