@@ -32,8 +32,10 @@ import org.apache.logging.log4j.Logger;
 	        this.reimbService = reimbService;
 	        this.jsonMapper = jsonMapper;
 	    }
+	    
+	   
 
-	    @Override
+	   /* @Override
 	    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	        
 	        resp.setContentType("application/json");
@@ -91,7 +93,7 @@ import org.apache.logging.log4j.Logger;
 	            
 
 	        resp.getWriter().write("Reimb working!");
-	    }
+	    }*/
 
 	    @Override
 	    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

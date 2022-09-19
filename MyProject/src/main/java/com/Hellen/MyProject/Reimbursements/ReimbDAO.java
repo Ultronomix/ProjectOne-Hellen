@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ReimbDAO {
 	
-	private final String baseSelect = "SELECT er.reimb_id, er.amount, er.submitted, er.resolved, er.description, er.payment_id, er.author_id, er.resolver_id, er.status_id, er.type_id, ers.status, ert.type, au.user_id " +
+	private final String baseSelect = "SELECT er.reimb_id, er.amount, er.submitted, er.resolved, er.description, er.author_id, er.resolver_id, er.status_id, er.type_id, ers.status, ert.type, au.user_id " +
                                       "FROM ers_reimbursements er " +
                                       "JOIN ers_reimbursement_statuses ers " +
                                       "ON er.status_id = ers.status_id " +
@@ -214,21 +214,20 @@ public class ReimbDAO {
       public String save(Reimb newReimb) {
 
           //logger.info("Attempting to persist new reimbursement at {}", LocalDateTime.now());
-          String sql = "INSERT INTO ers_reimbursements (amount, payment_id, reimb_id, submitted, description, author_id, status_id, type_id) " +
-                       "VALUES (?, ?, ?, current_date , ?, ?, 3000, ?)";
+          String sql = "INSERT INTO ers_reimbursements (reimb_id, amount, author_id, description, status_id, type_id) " +
+                       "VALUES (5, ? , ?, ?, 3000, ?)";
 
           try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
              
-        	  Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-              PreparedStatement pstmt = conn.prepareStatement(sql, new String[] {"reimb_id"});
-              pstmt.setDouble(1, newReimb.getAmount());
-              pstmt.setString(2, newReimb.getDescription());
+        	  //Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+              PreparedStatement pstmt = conn.prepareStatement(baseSelect);
+              pstmt.setString(1, newReimb.getReimb_id());
+              pstmt.setDouble(2, newReimb.getAmount());
               pstmt.setString(3, newReimb.getAuthor_id());
-              pstmt.setString(4, newReimb.getType_id());
-              pstmt.setString(4, newReimb.getReimb_id());
-              pstmt.setString(5, newReimb.getPayment_id());
-              //pstmt.setString(6, newReimb.getSubmitted());
+              pstmt.setString(4, newReimb.getDescription());
+              pstmt.setString(5, newReimb.getType_id());
+             
               
               pstmt.executeUpdate();
 
@@ -252,12 +251,11 @@ public class ReimbDAO {
      Reimb reimb = new Reimb();
      reimb.setReimb_id(rs.getString("reimb_id"));
      reimb.setAmount(rs.getDouble("amount"));
-     //reimb.setSubmitted(rs.getString("submitted"));
-     reimb.setResolver_id(rs.getString("resolve_id"));
-     reimb.setDescription(rs.getString("description"));
-     reimb.setPayment_id(rs.getString("payment_id"));
-     reimb.setAuthor_id(rs.getString("author_id"));
+     reimb.setSubmitted(rs.getTimestamp("submitted").toLocalDateTime());
      reimb.setResolver_id(rs.getString("resolver_id"));
+     reimb.setDescription(rs.getString("description"));   
+     reimb.setAuthor_id(rs.getString("author_id"));
+     reimb.setResolved(rs.getTimestamp("resolved").toLocalDateTime());
      reimb.setStatus_id(rs.getString("status_id"));
      reimb.setType_id(rs.getString("type_id"));
      reimbs.add(reimb);

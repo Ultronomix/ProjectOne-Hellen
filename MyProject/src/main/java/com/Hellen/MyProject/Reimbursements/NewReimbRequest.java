@@ -7,7 +7,6 @@
 	 private String reimb_id;
 	    private double amount;
 	    private String description;
-	    private String payment_id;
 	    private String author_id; //? links to user_id  
 	    private String type_id; //? links to reimbursement type
 
@@ -36,13 +35,7 @@
 	        this.description = description;
 	    }
 
-	    public String getPayment_id() {
-	        return payment_id;
-	    }
-
-	    public void setPayment_id(String payment_id) {
-	        this.payment_id = payment_id;
-	    }
+	  
 
 	    public String getAuthor_id() {
 	        return author_id;
@@ -67,8 +60,7 @@
 	        return "NewReimbRequest {" + 
 	                "reimb_id = '" + reimb_id + '\'' + 
 	                "amount = '" + amount + '\'' +
-	                "description = '" + description + '\'' +
-	                "payment_id = '" + payment_id + '\'' +
+	                "description = '" + description + '\'' +	                
 	                "author_id = '" + author_id + '\'' +
 	                "type_id = '" + type_id + '\'' +
 	                '}';
@@ -79,8 +71,7 @@
 	        Reimb extractEntity = new Reimb();
 	        extractEntity.setReimb_id(this.reimb_id);
 	        extractEntity.setAmount(this.amount);
-	        extractEntity.setDescription(this.description);
-	        extractEntity.setPayment_id(this.payment_id);
+	        extractEntity.setDescription(this.description);	        
 	        extractEntity.setAuthor_id(this.author_id);
 	        extractEntity.setType_id(this.type_id);
 	        return null;

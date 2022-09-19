@@ -110,10 +110,10 @@ public class ReimbService {
     }
     
     public ResourceCreationResponse create(NewReimbRequest newReimb) {
-    	if(newReimb == null)
+    	if(newReimb == null) {
     		throw new InvalidRequestException("A new reimbursement request denied");
     
-    
+    	}
     if (newReimb.getAmount() == 0) {
         throw new InvalidRequestException("Provided request payload was null.");
    
@@ -135,6 +135,7 @@ public class ReimbService {
     Reimb reimbToPersist = newReimb.extractEntity();
     String newReimb_id = reimbDAO.save(reimbToPersist);
     return new ResourceCreationResponse(newReimb_id);
+ }
 }
 
-}
+

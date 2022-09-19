@@ -22,7 +22,7 @@ public class MyApplication {
 
 	public static void main(String[] args) throws LifecycleException {
 		
-		 //logger.info("Starting MyApplication");
+		 
 		 
 		String docBase = System.getProperty("java.io.tmpdir");
 		Tomcat webServer = new Tomcat();
@@ -40,8 +40,8 @@ public class MyApplication {
 		 
 		ObjectMapper jsonMapper = new ObjectMapper();
 		 
-	    UserServlet userServlet = new UserServlet(userService);
-        AuthServlet authServlet = new AuthServlet(authService);
+	    UserServlet userServlet = new UserServlet(userService, jsonMapper);
+        AuthServlet authServlet = new AuthServlet(authService, jsonMapper);
         ReimbServlet reimbServlet = new ReimbServlet(reimbService, jsonMapper);
         
         

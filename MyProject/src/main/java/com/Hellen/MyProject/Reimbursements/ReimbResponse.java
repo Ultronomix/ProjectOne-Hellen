@@ -10,8 +10,7 @@ public class ReimbResponse implements Serializable{
     private double amount;
     private LocalDateTime submitted;
     private LocalDateTime resolved;
-    private String description;
-    private String payment_id;
+    private String description;   
     private String author_id; // ? links to user_id
     private String resolver_id; // ? links to user_id
     private String status_id; // ? links to reimbursement statuses
@@ -22,8 +21,7 @@ public class ReimbResponse implements Serializable{
         this.amount = subject.getAmount();
         this.submitted = subject.getSubmitted();
         this.resolved = subject.getResolved();
-        this.description = subject.getDescription();
-        this.payment_id = subject.getPayment_id();
+        this.description = subject.getDescription();        
         this.author_id = subject.getAuthor_id();
         this.resolver_id = subject.getResolver_id();
         this.status_id = subject.getStatus_id();
@@ -36,12 +34,12 @@ public class ReimbResponse implements Serializable{
         if (this == o) return true;
         if (o == null ||getClass() != o.getClass()) return false;
         ReimbResponse reimbResponse = (ReimbResponse) o;
-        return amount == reimbResponse.amount && Objects.equals(reimb_id, reimbResponse.reimb_id) && Objects.equals(submitted, reimbResponse.submitted) && Objects.equals(resolved, reimbResponse.resolved) && Objects.equals(description, reimbResponse.description) && Objects.equals(payment_id, reimbResponse.payment_id)&& Objects.equals(author_id, reimbResponse.author_id) && Objects.equals(resolver_id, reimbResponse.resolver_id)&& Objects.equals(status_id, reimbResponse.status_id) && Objects.equals(type_id, reimbResponse.type_id);
+        return amount == reimbResponse.amount && Objects.equals(reimb_id, reimbResponse.reimb_id) && Objects.equals(submitted, reimbResponse.submitted) && Objects.equals(resolved, reimbResponse.resolved) && Objects.equals(description, reimbResponse.description) && Objects.equals(author_id, reimbResponse.author_id) && Objects.equals(resolver_id, reimbResponse.resolver_id)&& Objects.equals(status_id, reimbResponse.status_id) && Objects.equals(type_id, reimbResponse.type_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reimb_id, amount, submitted, resolved, description, payment_id, author_id, resolver_id, status_id, type_id);                   
+        return Objects.hash(reimb_id, amount, submitted, resolved, description, author_id, resolver_id, status_id, type_id);                   
     }
 
     @Override
@@ -51,8 +49,7 @@ public class ReimbResponse implements Serializable{
                 "amount = '" + amount + '\'' +
                 "submitted = '" + submitted + '\'' +
                 "resolved = '" + resolved + '\'' +
-                "description = '" + description + '\'' +
-                "payment_id = '" + payment_id + '\'' +
+                "description = '" + description + '\'' +                
                 "author_id = '" + author_id + '\'' +
                 "resolver_id = '" + resolver_id + '\'' +
                 "status = '" + status_id + '\'' +

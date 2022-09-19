@@ -20,13 +20,14 @@ import com.Hellen.MyProject.Exceptions.*;
 
 	public class AuthServlet extends HttpServlet {
 		
-		
+		private final ObjectMapper jsonMapper;
 		private final AuthService authService;
 		
 		final DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm:ss");
 	
-	    public AuthServlet(AuthService authService) {
+	    public AuthServlet(AuthService authService, ObjectMapper jsonMapper) {
 	    	this.authService = authService;
+	    	this.jsonMapper = jsonMapper;
 	    }
 	    
 	    @Override

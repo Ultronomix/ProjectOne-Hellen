@@ -19,10 +19,14 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UserServlet extends HttpServlet {
-	 
+	
+	private final ObjectMapper jsonMapper;
 	private final UserService userService;
 	
-	public UserServlet(UserService userService) {this.userService = userService;}
+	public UserServlet(UserService userService, ObjectMapper jsonMapper) {
+		this.userService = userService;
+		this.jsonMapper = jsonMapper;
+	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws IOException {

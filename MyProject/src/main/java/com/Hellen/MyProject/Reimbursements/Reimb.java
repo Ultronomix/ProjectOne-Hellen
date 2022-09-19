@@ -7,7 +7,6 @@ public class Reimb {
 	
 	private String reimb_id;
 	private LocalDateTime resolved;
-	private String payment_id;
 	private LocalDateTime submitted;
 	private double amount;
 	private String resolver_id;
@@ -23,12 +22,7 @@ public class Reimb {
 	public void setReimb_id(String reimb_id) {
 		this.reimb_id = reimb_id;
 	}
-	public String getPayment_id() {
-		return payment_id;
-	}
-	public void setPayment_id(String payment_id) {
-		this.payment_id = payment_id;
-	}
+	
 	public LocalDateTime getSubmitted() {
 		return submitted;
 	}
@@ -80,7 +74,7 @@ public class Reimb {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(reimb_id, amount, submitted, resolved, description, payment_id, author_id, resolver_id, status_id, type_id);
+		return Objects.hash(reimb_id, amount, submitted, resolved, description, author_id, resolver_id, status_id, type_id);
 	}
 	
 	@Override
@@ -88,7 +82,7 @@ public class Reimb {
 		if(this == o) return  true;
 		if(o == null || getClass() != o.getClass()) return false;
 		Reimb reimbursement = (Reimb) o;
-		return Double.compare(reimbursement.amount, amount) == 0 && Objects.equals(reimb_id, reimbursement.reimb_id)&& Objects.equals(submitted, reimbursement.submitted) && Objects.equals(resolver_id, reimbursement.resolver_id) && Objects.equals(description, reimbursement.description) && Objects.equals(payment_id, reimbursement.payment_id) && Objects.equals(author_id, reimbursement.author_id) && Objects.equals(resolved, reimbursement.resolved) && Objects.equals(status_id, reimbursement.status_id) && Objects.equals(type_id, reimbursement.type_id);
+		return Double.compare(reimbursement.amount, amount) == 0 && Objects.equals(reimb_id, reimbursement.reimb_id)&& Objects.equals(submitted, reimbursement.submitted) && Objects.equals(resolver_id, reimbursement.resolver_id) && Objects.equals(description, reimbursement.description)  && Objects.equals(author_id, reimbursement.author_id) && Objects.equals(resolved, reimbursement.resolved) && Objects.equals(status_id, reimbursement.status_id) && Objects.equals(type_id, reimbursement.type_id);
 	}
 	
 	@Override
@@ -98,8 +92,7 @@ public class Reimb {
 			   "amount='" + amount + "' " +
 	           "submitted='" + submitted + "' " +
 			   "resolved='" + resolved + "' " +
-	           "description='" + description + "' " +
-			   "payment_id='" + payment_id + "' " +
+	           "description='" + description + "' " +			   
 	           "author_id='" + author_id + "' " +
 			   "resolver_id='" + resolver_id + "' " +
 	           "status='" + status_id + "' " +
