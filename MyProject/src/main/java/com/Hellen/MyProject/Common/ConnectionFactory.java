@@ -15,10 +15,13 @@ public class ConnectionFactory {
 	public ConnectionFactory() {
 		
 		try {
-			 Class.forName("org.postgresql.Driver");
+			
+			 Class.forName("org.postgresql.Driver");//load the driver
 		     dbProps.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties"));
+		
 		} catch (IOException e){
 			throw new RuntimeException("Could not read from the properties file.");
+		
 		} catch(ClassNotFoundException e) {
 			throw new RuntimeException("Failed to load postgresql to JDBC driver", e);
 		}

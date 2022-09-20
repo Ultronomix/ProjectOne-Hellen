@@ -67,8 +67,8 @@ public class UserService {
 		if(newUser.getUsername() == null || newUser.getUsername().trim().length() < 4){
 			throw new InvalidRequestException("Username must atleast be 4 characters");
 		}
-		if(newUser.getPassword() == null || newUser.getPassword().trim().length() < 6){
-			throw new InvalidRequestException("Password must atleast be 6 characters");
+		if(newUser.getPassword() == null || newUser.getPassword().trim().length() < 4){
+			throw new InvalidRequestException("Password must atleast be 4 characters");
 		}
 		
 		

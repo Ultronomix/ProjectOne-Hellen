@@ -14,6 +14,11 @@ public class User {
 	private String role;
 	private String role_id;
 	
+	public User() {
+		super();
+		
+	}
+
 	public String getUserId() {
 		return userId;
 	}

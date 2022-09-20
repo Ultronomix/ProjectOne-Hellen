@@ -53,6 +53,7 @@ public class UserDAO {
   
    public Optional<User> findUserByUsernameAndPassword(String username, String password) {
 	  
+	   System.out.println("was called");
 	   String sql = baseSelect +  " where au.username = ? and au._password = ?";
 	                
 			   
@@ -153,7 +154,7 @@ public class UserDAO {
    public String save(User user) {
 	   
 	   String sql = "insert into ers_users(user_id, username, email, _password, given_name, surname, is_active, role_id) " +
-                    "values ('11',?, ?, ?, ?, ?, ?, ? )";
+                    "values ('14',?, ?, ?, ?, ?, ?, ? )";
 	   
 	   try (Connection conn = ConnectionFactory.getInstance().getConnection()){
 		   
@@ -182,9 +183,7 @@ public class UserDAO {
 	   }
 	   return user.getUsername();
 	   }
-	   
-		   
-		  
+	     
    
    private List<User> mapResultSet(ResultSet rs) throws SQLException {
 	   List<User> users = new ArrayList();
